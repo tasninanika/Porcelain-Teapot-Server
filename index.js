@@ -29,9 +29,13 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
+    const teaCollection = client.db("teaDB").collection("tea");
+
     app.post("/tea", async (req, res) => {
       const newTea = req.body;
       console.log(newTea);
+      const result = await teaCollection.insertOne(newTea);
+      res.send(result);
     });
 
     // Send a ping to confirm a successful connection
