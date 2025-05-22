@@ -31,6 +31,12 @@ async function run() {
 
     const teaCollection = client.db("teaDB").collection("tea");
 
+    app.get("/tea", async (req, res) => {
+      const cursor = teaCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
     app.post("/tea", async (req, res) => {
       const newTea = req.body;
       console.log(newTea);
