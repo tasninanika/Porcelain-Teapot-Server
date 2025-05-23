@@ -31,12 +31,22 @@ async function run() {
 
     const teaCollection = client.db("teaDB").collection("tea");
 
+    // get data
     app.get("/tea", async (req, res) => {
       const cursor = teaCollection.find();
       const result = await cursor.toArray();
       res.send(result);
     });
 
+    // update data
+    app.get("/tea/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await teaCollection.findOne(query);
+      res.send(result);
+    });
+
+    // insert data
     app.post("/tea", async (req, res) => {
       const newTea = req.body;
       console.log(newTea);
@@ -44,6 +54,7 @@ async function run() {
       res.send(result);
     });
 
+    // delete data
     app.delete("/tea/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };
