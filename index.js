@@ -31,6 +31,9 @@ async function run() {
 
     const teaCollection = client.db("teaDB").collection("tea");
 
+    // user database
+    const userCollection = client.db("teaDB").collection("users");
+
     // get data
     app.get("/tea", async (req, res) => {
       const cursor = teaCollection.find();
