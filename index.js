@@ -100,8 +100,8 @@ async function run() {
       res.send(result);
     });
 
-    app.patch("/users/:email", async (req, res) => {
-      const email = req.params.email;
+    app.patch("/users", async (req, res) => {
+      const email = req.body.email;
       const filter = { email };
       const updatedDoc = {
         $set: {
