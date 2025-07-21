@@ -2,15 +2,15 @@ const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-const PORT = process.env.PORT || 5000;
 
-// Creating Express App
+const PORT = process.env.PORT || 5000;
 const app = express();
 
-// Using middlewares
+// Middlewares
 app.use(express.json());
 app.use(cors());
 
+// Test Route
 app.get("/", (req, res) => {
   res.send("Tea Server is Cooking!!!");
 });
@@ -28,10 +28,9 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     await client.connect();
-    // Creating Database
     const teasCollection = client.db("PorcelainTea").collection("teas");
 
-    // Read Coffees
+    // Read All Teas
     app.get("/teas", async (req, res) => {
       const data = await teasCollection.find().toArray();
       res.send(data);
@@ -42,11 +41,10 @@ async function run() {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
       const result = await teasCollection.findOne(filter);
-      console.log(result);
       res.send(result);
     });
 
-    // Create Teas
+    // Create Tea
     app.post("/teas", async (req, res) => {
       const data = req.body;
       const result = await teasCollection.insertOne(data);
@@ -79,7 +77,7 @@ async function run() {
       res.send(result);
     });
 
-    // Delete a Tea
+    // Delete Tea
     app.delete("/teas/:id", async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
@@ -87,9 +85,12 @@ async function run() {
       res.send(result);
     });
   } finally {
-    // await client.close();
+    // client.close(); // Keep connection open
   }
 }
 run().catch(console.dir);
 
-app.listen(PORT);
+// Start Server
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
