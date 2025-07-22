@@ -3,21 +3,12 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 
+const PORT = process.env.PORT || 5000;
 const app = express();
 
 // Middlewares
 app.use(express.json());
-app.use(
-  cors({
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  })
-);
-
-// Test Route
-app.get("/", (req, res) => {
-  res.send("Tea Server is Cooking!!!");
-});
+app.use(cors());
 
 // MongoDB Connection
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.4vcsd99.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
@@ -89,10 +80,17 @@ async function run() {
       res.send(result);
     });
   } finally {
-    // Don't close the client
+    // client.close(); // Keep connection open
   }
 }
 run().catch(console.dir);
 
-// Export app for Vercel
-module.exports = app;
+// Test Route
+app.get("/", (req, res) => {
+  res.send("Tea Server is Cooking!!!");
+});
+
+// Start Server
+app.listen(PORT, () => {
+  console.log(`Server running on port: ${PORT}`);
+});
