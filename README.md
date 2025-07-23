@@ -1,6 +1,6 @@
 # **Porcelain Tea Server**
 
-The **Porcelain Tea Server** is the backend API for the Porcelain Tea web application. It manages all CRUD operations for teas — including adding, updating, deleting, and fetching tea details. The server is designed to handle smooth data flow between the frontend and the database.
+The **Porcelain Tea Server** is the backend API for the Porcelain Tea web application. It manages all **CRUD** operations for teas — including adding, updating, deleting, and fetching tea details. The server is designed to handle smooth data flow between the frontend and the database.
 
 ---
 
